@@ -1,0 +1,71 @@
+services:
+  turla_mysql:
+    image: mysql:8.0
+    container_name: turla_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Turla2024!
+      MYSQL_DATABASE: turla_db
+      MYSQL_USER: turla_user
+      MYSQL_PASSWORD: Turla2024!
+
+    ports:
+      - "5222:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - turla_network
+
+  turla_mongo:
+    image: mongo:8.0.11
+    container_name: turla_mongo
+    restart: always
+    ports:
+      - "5223:27017"
+    volumes:
+      - ./mongodb/docker-entrypoint-initdb.d/db-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./mongodb/data/db:/data/db
+      - ./mongodb/dump:/dump
+    networks:
+      - turla_network
+
+  turla_redis:
+    image: redis:8.0.3-alpine3.21
+    container_name: turla_redis
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    restart: always
+    ports:
+      - "5221:6379"
+    volumes:
+      - ./redis/data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - turla_network
+
+  turla_phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: turla_phpmyadmin
+    restart: always
+    ports:
+      - "5228:80"
+    environment:
+      PMA_HOST: turla_mysql
+      PMA_PORT: 3306
+      APACHE_SERVER_NAME: localhost
+      APACHE_SERVER_ADMIN: admin@localhost
+      UPLOAD_LIMIT: 4256M
+      MEMORY_LIMIT: 4256M
+    depends_on:
+      - turla_mysql
+    networks:
+      - turla_network
+
+volumes:
+  mysql_data:
+  mongodb_data:
+  redis_data:
+
+networks:
+  turla_network:
+    name: turla_network
+    driver: bridge

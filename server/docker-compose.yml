@@ -1,0 +1,17 @@
+networks:
+  turla_network:
+    external: true
+
+services:
+  turka_server:
+    container_name: turka_server
+    image: node:20.12.2
+    restart: always
+    ports:
+      - 5226:5226
+    working_dir: /app
+    volumes:
+      - ./:/app
+    command: bash -c "npm install -g nodemon && npm install --legacy-peer-deps && npm run dev"
+    networks:
+      - turla_network

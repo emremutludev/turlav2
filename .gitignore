@@ -1,0 +1,17 @@
+mysql
+
+mongodb/data
+mongodb/dump
+
+backoffice/dist
+backoffice/node_modules
+backoffice/package-lock.json
+
+panel/dist
+panel/node_modules
+panel/package-lock.json
+
+server/node_modules
+server/package-lock.json
+
+redis/data

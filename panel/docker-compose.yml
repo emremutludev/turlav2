@@ -1,0 +1,14 @@
+networks:
+    turla_network:
+        external: true
+
+services:
+    turla_panel:
+        container_name: turla_panel
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - "5227:80"
+        networks:
+            - turla_network
