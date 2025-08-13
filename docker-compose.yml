@@ -61,9 +61,9 @@ services:
       - turla_network
 
 volumes:
-  mysql_data:
-  mongodb_data:
-  redis_data:
+  mysql:
+  mongodb:
+  redis:
 
 networks:
   turla_network:
