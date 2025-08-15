@@ -1,6 +1,5 @@
 import * as url from "url";
 import http from "http";
-import debugLib from "debug";
 import createError from "http-errors";
 import express from "express";
 import path from "path";
@@ -10,6 +9,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { initializeRedis } from "./helpers/redis.js";
 import { initializeDatabaseMongo } from "./helpers/mongo.js";
+import { initializeDatabaseMySQL } from "./helpers/mysql.js";
 
 const __dirname = url.fileURLToPath(new URL(".", import.meta.url));
 global.__basedir = __dirname;
@@ -18,6 +18,7 @@ dotenv.config();
 (async () => {
   await initializeRedis();
   await initializeDatabaseMongo();
+  await initializeDatabaseMySQL();
 })();
 
 const app = express();
