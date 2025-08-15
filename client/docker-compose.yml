@@ -3,8 +3,8 @@ networks:
         external: true
 
 services:
-    turla_panel:
-        container_name: turla_panel
+    turla_client:
+        container_name: turla_client
         build:
             context: .
             dockerfile: Dockerfile
